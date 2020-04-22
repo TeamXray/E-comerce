@@ -28,13 +28,13 @@ namespace E_comerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<Datacontextcs>(option =>
             {
                 option.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddControllers();
             services.AddCors();
+            
 
 
             var mappingConfig = new MapperConfiguration(mc =>
@@ -85,6 +85,14 @@ namespace E_comerce
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProduitService, ProduitService>();
+            services.AddScoped<ICategorieService, CategorieService>();
+            services.AddScoped<IVetementService, VetementService>();
+            services.AddScoped<ITechnologieService, TechnologieService>();
+
+
+
+
 
 
         }

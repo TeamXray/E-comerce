@@ -3,14 +3,16 @@ using System;
 using E_comerce.Dbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_comerce.Migrations
 {
     [DbContext(typeof(Datacontextcs))]
-    partial class DatacontextcsModelSnapshot : ModelSnapshot
+    [Migration("20200422150651_updateDb")]
+    partial class updateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
