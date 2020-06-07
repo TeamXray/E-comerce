@@ -36,13 +36,11 @@ namespace E_comerce.Entity
         [Column(name:"Image")]
         public string image { get; set; }
 
-        [ForeignKey("CategorieId")]
-        public virtual Categorie categorie { get; set; }
+        public int Sous_catId { get; set; }
+        public Sous_cat  Sous_Cat { get; set; }
+        public int UserId { get; set; }
 
-
-        public int CategorieId { get; set; }
-
-        //public Categorie categories { get; set; }
+        public Users User { get; set; }
 
 
     }

@@ -9,5 +9,6 @@ namespace E_comerce.Services
         Users Authenticate(string email, string password);
         IEnumerable<Users> GetAll();
         Users GetById(int id);
+        Users creatfou(Users user, string password);
     }
 }

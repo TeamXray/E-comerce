@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace E_comerce.Services
 {
-    public interface ICategorieService
+    public interface Isous_cat
     {
-        IEnumerable<Categorie> GetAll();
-        Categorie creatcat(Categorie categorie);
-
+        IEnumerable<Sous_cat> GetAllS();
+        Sous_cat Creation(Sous_cat soucat);
     }
 }

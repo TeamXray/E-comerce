@@ -31,7 +31,7 @@ namespace E_comerce.Services
         public IEnumerable<Produit> GetAll()
         {
 
-            return db.produits.AsEnumerable();
+            return db.produits.Include(c => c.Sous_Cat.Categorie).Include(c => c.User).ToList();
         }
         public Produit GetProduitById(int id) 
         {

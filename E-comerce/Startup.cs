@@ -13,6 +13,7 @@ using AutoMapper;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace E_comerce
 {
@@ -32,7 +33,11 @@ namespace E_comerce
             {
                 option.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(
+          options => {
+              options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+          });
+
             services.AddCors();
             
 
@@ -87,8 +92,8 @@ namespace E_comerce
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProduitService, ProduitService>();
             services.AddScoped<ICategorieService, CategorieService>();
-            services.AddScoped<IVetementService, VetementService>();
-            services.AddScoped<ITechnologieService, TechnologieService>();
+            services.AddScoped<IAdmin, Adminservicecs>();
+            services.AddScoped<Isous_cat, Sous_catService>();
 
 
 

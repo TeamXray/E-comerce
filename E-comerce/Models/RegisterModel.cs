@@ -17,6 +17,11 @@ namespace E_comerce.Models
         [Required]
         public string password { get; set; }
 
+        [Required]
+        public string adresse { get; set; }
+
+        [Required]
+        public int telephone { get; set; }
     }
 }
 

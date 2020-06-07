@@ -39,7 +39,7 @@ namespace E_comerce.Controllers
             return Ok(user);
         }
 
-        [Authorize(Roles= Roles.Admin)]
+        [AllowAnonymous]
         [HttpGet("getall")]
         public IActionResult Getall()
         {
@@ -67,5 +67,32 @@ namespace E_comerce.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+
+        [AllowAnonymous]
+        [HttpPost("registerf")]
+        public IActionResult Registerfou([FromBody]RegisterModel model)
+        {
+
+            var user = _mapper.Map<Users>(model);
+
+
+
+            try
+            {
+                // create user
+                _userService.creatfou(user, model.password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+
+
     }
 }

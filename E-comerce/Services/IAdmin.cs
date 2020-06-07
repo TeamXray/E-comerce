@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace E_comerce.Services
 {
-    public interface ICategorieService
+    public interface IAdmin
     {
-        IEnumerable<Categorie> GetAll();
-        Categorie creatcat(Categorie categorie);
+        Users GetById(int id);
+        IEnumerable<Users> GetAllF();
 
+        IEnumerable<Users> GetAll();
+
+        void updateuser(int id);
     }
 }

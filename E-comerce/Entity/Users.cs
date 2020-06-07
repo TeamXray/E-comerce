@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace E_comerce.Entity
 {
@@ -13,5 +14,12 @@ namespace E_comerce.Entity
         public byte[] PasswordSalt { get; set; }
         public string Roles { get; set; }
         public string Token { get; set; }
+        public string adresse { get; set; }
+        public int telephone { get; set; }
+        public string etat { get; set; }
+       
+        public string logoCo { get; set; }
+        public string NomScoite { get; set; }
+        public   List<Produit> produits { get; set; }
     }
 }

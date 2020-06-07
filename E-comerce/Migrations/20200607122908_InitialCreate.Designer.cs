@@ -3,14 +3,16 @@ using System;
 using E_comerce.Dbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_comerce.Migrations
 {
     [DbContext(typeof(Datacontextcs))]
-    partial class DatacontextcsModelSnapshot : ModelSnapshot
+    [Migration("20200607122908_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +67,9 @@ namespace E_comerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("CommandecsCommandeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Desc")
                         .IsRequired()
                         .HasColumnName("Description")
@@ -99,6 +104,8 @@ namespace E_comerce.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id_prod");
+
+                    b.HasIndex("CommandecsCommandeId");
 
                     b.HasIndex("Sous_catId");
 
@@ -218,6 +225,10 @@ namespace E_comerce.Migrations
 
             modelBuilder.Entity("E_comerce.Entity.Produit", b =>
                 {
+                    b.HasOne("E_comerce.Entity.Commandecs", null)
+                        .WithMany("produits")
+                        .HasForeignKey("CommandecsCommandeId");
+
                     b.HasOne("E_comerce.Entity.Sous_cat", "Sous_Cat")
                         .WithMany("produits")
                         .HasForeignKey("Sous_catId")

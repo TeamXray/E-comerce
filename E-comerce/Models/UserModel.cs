@@ -11,5 +11,10 @@ namespace E_comerce.Models
         public string FirstName { get; set; }
         public string email { get; set; }
         public string Username { get; set; }
+        public string adresse { get; set; }
+        public int telephone { get; set; }
+        public string etat { get; set; }
+
+
     }
 }

@@ -16,27 +16,23 @@ namespace E_comerce.Dbcontext
         }
         public DbSet<Users> Users { get; set; }
         public DbSet<Produit> produits { get; set; }
+        public DbSet<Sous_cat> Sous_Cats { get; set; }
+
         public DbSet<Categorie> categories { get; set; }
-        public DbSet<LabelCat> labelCats { get; set; }
 
-        public DbSet<Vetement> vetements { get; set; }
-        public DbSet<Technologie> technologies { get; set; }
-        public DbSet<Immeuble> immeubles { get; set; }
-        public DbSet<Autre> autres { get; set; }
+        public DbSet<Produit> Produits { get; set; }
+        public DbSet<VenteFlash> venteFlashes { get; set; }
 
-        public DbSet<TypeImm> typeImms { get; set; }
-        public DbSet<TypeTech> typeTechs { get; set; }
-        public DbSet<TypeVet> typeVets { get; set; }
-
-
-
-
-
-
-
-
-
-
+        public DbSet<Commandecs> commandecs { get; set; }
 
     }
+
+
 }
+
+
+
+
+
+
+ 

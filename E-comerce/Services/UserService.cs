@@ -43,7 +43,7 @@ namespace E_comerce.Services
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            user.Roles = Roles.Admin;
+            user.Roles = Roles.User;
             db.Users.Add(user);
             db.SaveChanges();
 
@@ -130,5 +130,29 @@ namespace E_comerce.Services
             return true;
         }
 
+
+
+
+    
+
+        public Users creatfou(Users user, string password)
+        {
+            // validation
+            if (string.IsNullOrWhiteSpace(password))
+                throw new AppException("Password is required");
+
+            if (db.Users.Any(x => x.Email == user.Email))
+                throw new AppException("l'email \"" + user.Email + "\" est déja utlisé");
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.Roles = Roles.Forurni;
+            user.etat = "non-validé";
+            db.Users.Add(user);
+            db.SaveChanges();
+            return user;
+        }
     }
 }
