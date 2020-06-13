@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_comerce.Migrations
 {
     [DbContext(typeof(Datacontextcs))]
-    [Migration("20200607122908_InitialCreate")]
+    [Migration("20200611093534_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,52 @@ namespace E_comerce.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("E_comerce.Entity.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("sommeTotal")
+                        .HasColumnType("float");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("carts");
+                });
+
+            modelBuilder.Entity("E_comerce.Entity.Cartitem", b =>
+                {
+                    b.Property<int>("cartItId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("cartId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("prixp")
+                        .HasColumnType("float");
+
+                    b.Property<int>("produitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("cartItId");
+
+                    b.HasIndex("cartId");
+
+                    b.HasIndex("produitId");
+
+                    b.ToTable("cartitems");
+                });
 
             modelBuilder.Entity("E_comerce.Entity.Categorie", b =>
                 {
@@ -39,6 +85,9 @@ namespace E_comerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("MoyenPayment")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -56,6 +105,8 @@ namespace E_comerce.Migrations
 
                     b.HasKey("CommandeId");
 
+                    b.HasIndex("CartId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("commandecs");
@@ -65,9 +116,6 @@ namespace E_comerce.Migrations
                 {
                     b.Property<int>("id_prod")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CommandecsCommandeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Desc")
@@ -104,8 +152,6 @@ namespace E_comerce.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id_prod");
-
-                    b.HasIndex("CommandecsCommandeId");
 
                     b.HasIndex("Sous_catId");
 
@@ -214,8 +260,38 @@ namespace E_comerce.Migrations
                     b.ToTable("venteFlashes");
                 });
 
+            modelBuilder.Entity("E_comerce.Entity.Cart", b =>
+                {
+                    b.HasOne("E_comerce.Entity.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("E_comerce.Entity.Cartitem", b =>
+                {
+                    b.HasOne("E_comerce.Entity.Cart", "cart")
+                        .WithMany("cartitems")
+                        .HasForeignKey("cartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_comerce.Entity.Produit", "produit")
+                        .WithMany()
+                        .HasForeignKey("produitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("E_comerce.Entity.Commandecs", b =>
                 {
+                    b.HasOne("E_comerce.Entity.Cart", "cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("E_comerce.Entity.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -225,10 +301,6 @@ namespace E_comerce.Migrations
 
             modelBuilder.Entity("E_comerce.Entity.Produit", b =>
                 {
-                    b.HasOne("E_comerce.Entity.Commandecs", null)
-                        .WithMany("produits")
-                        .HasForeignKey("CommandecsCommandeId");
-
                     b.HasOne("E_comerce.Entity.Sous_cat", "Sous_Cat")
                         .WithMany("produits")
                         .HasForeignKey("Sous_catId")

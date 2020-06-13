@@ -66,22 +66,19 @@ namespace E_comerce.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "commandecs",
+                name: "carts",
                 columns: table => new
                 {
-                    CommandeId = table.Column<int>(nullable: false)
+                    CartId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    dateCommande = table.Column<DateTime>(nullable: false),
-                    PrixTotal = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    etat_payment = table.Column<string>(nullable: true),
-                    MoyenPayment = table.Column<string>(nullable: true)
+                    sommeTotal = table.Column<float>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_commandecs", x => x.CommandeId);
+                    table.PrimaryKey("PK_carts", x => x.CartId);
                     table.ForeignKey(
-                        name: "FK_commandecs_Users_UserId",
+                        name: "FK_carts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Userid",
@@ -125,18 +122,11 @@ namespace E_comerce.Migrations
                     Solde = table.Column<int>(nullable: false),
                     Image = table.Column<string>(nullable: false),
                     Sous_catId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    CommandecsCommandeId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Produit", x => x.id_prod);
-                    table.ForeignKey(
-                        name: "FK_Produit_commandecs_CommandecsCommandeId",
-                        column: x => x.CommandecsCommandeId,
-                        principalTable: "commandecs",
-                        principalColumn: "CommandeId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Produit_Sous_Cats_Sous_catId",
                         column: x => x.Sous_catId,
@@ -151,15 +141,88 @@ namespace E_comerce.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "commandecs",
+                columns: table => new
+                {
+                    CommandeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    dateCommande = table.Column<DateTime>(nullable: false),
+                    PrixTotal = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    etat_payment = table.Column<string>(nullable: true),
+                    MoyenPayment = table.Column<string>(nullable: true),
+                    CartId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_commandecs", x => x.CommandeId);
+                    table.ForeignKey(
+                        name: "FK_commandecs_carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "carts",
+                        principalColumn: "CartId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_commandecs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "cartitems",
+                columns: table => new
+                {
+                    cartItId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    qty = table.Column<int>(nullable: false),
+                    prixp = table.Column<float>(nullable: false),
+                    produitId = table.Column<int>(nullable: false),
+                    cartId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cartitems", x => x.cartItId);
+                    table.ForeignKey(
+                        name: "FK_cartitems_carts_cartId",
+                        column: x => x.cartId,
+                        principalTable: "carts",
+                        principalColumn: "CartId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_cartitems_Produit_produitId",
+                        column: x => x.produitId,
+                        principalTable: "Produit",
+                        principalColumn: "id_prod",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cartitems_cartId",
+                table: "cartitems",
+                column: "cartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cartitems_produitId",
+                table: "cartitems",
+                column: "produitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_carts_UserId",
+                table: "carts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_commandecs_CartId",
+                table: "commandecs",
+                column: "CartId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_commandecs_UserId",
                 table: "commandecs",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Produit_CommandecsCommandeId",
-                table: "Produit",
-                column: "CommandecsCommandeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produit_Sous_catId",
@@ -185,13 +248,19 @@ namespace E_comerce.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Produit");
+                name: "cartitems");
+
+            migrationBuilder.DropTable(
+                name: "commandecs");
 
             migrationBuilder.DropTable(
                 name: "venteFlashes");
 
             migrationBuilder.DropTable(
-                name: "commandecs");
+                name: "Produit");
+
+            migrationBuilder.DropTable(
+                name: "carts");
 
             migrationBuilder.DropTable(
                 name: "Sous_Cats");

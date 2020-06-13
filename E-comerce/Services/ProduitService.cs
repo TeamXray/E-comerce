@@ -79,12 +79,19 @@ namespace E_comerce.Services
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Produit> GetAllByname(string nom)
+        {
+            return db.produits.Where(e => e.Sous_Cat.Categorie.nom_cat == nom).Include(e => e.User).ToList();
+
+        }
+        
         //public bool CategorieLabel (int id , string labelt)
         //{
         //    Produit label = db.produits.Find(id);
 
         //    return label.categorie.Label.Equals(labelt);
         //}
-        
+
     }
 }

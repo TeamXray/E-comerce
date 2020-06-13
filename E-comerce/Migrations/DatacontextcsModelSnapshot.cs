@@ -17,6 +17,52 @@ namespace E_comerce.Migrations
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("E_comerce.Entity.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("sommeTotal")
+                        .HasColumnType("float");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("carts");
+                });
+
+            modelBuilder.Entity("E_comerce.Entity.Cartitem", b =>
+                {
+                    b.Property<int>("cartItId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("cartId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("prixp")
+                        .HasColumnType("float");
+
+                    b.Property<int>("produitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("cartItId");
+
+                    b.HasIndex("cartId");
+
+                    b.HasIndex("produitId");
+
+                    b.ToTable("cartitems");
+                });
+
             modelBuilder.Entity("E_comerce.Entity.Categorie", b =>
                 {
                     b.Property<int>("CategorieId")
@@ -37,6 +83,12 @@ namespace E_comerce.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodePostal")
+                        .HasColumnType("int");
+
                     b.Property<string>("MoyenPayment")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -46,6 +98,12 @@ namespace E_comerce.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("adresse")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("couvernement")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<DateTime>("dateCommande")
                         .HasColumnType("datetime(6)");
 
@@ -53,6 +111,8 @@ namespace E_comerce.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("CommandeId");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("UserId");
 
@@ -207,8 +267,38 @@ namespace E_comerce.Migrations
                     b.ToTable("venteFlashes");
                 });
 
+            modelBuilder.Entity("E_comerce.Entity.Cart", b =>
+                {
+                    b.HasOne("E_comerce.Entity.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("E_comerce.Entity.Cartitem", b =>
+                {
+                    b.HasOne("E_comerce.Entity.Cart", "cart")
+                        .WithMany("cartitems")
+                        .HasForeignKey("cartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_comerce.Entity.Produit", "produit")
+                        .WithMany()
+                        .HasForeignKey("produitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("E_comerce.Entity.Commandecs", b =>
                 {
+                    b.HasOne("E_comerce.Entity.Cart", "cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("E_comerce.Entity.Users", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

@@ -63,6 +63,18 @@ namespace E_comerce.Controllers
         }
 
 
+        // GET: api/Produit/Affiche/id
+        //[AllowAnonymous]
+        [HttpGet("Affichebyname/{nom}")]
+        public IActionResult AfficheByNom(string nom)
+        {
+            var prbyname = _ProduitService.GetAllByname(nom);
+
+        
+            return Ok(prbyname);
+        }
+
+
         // POST: api/Produit/ajout
         // more details see https://aka.ms/RazorPagesCRUD.
         //[AllowAnonymous]

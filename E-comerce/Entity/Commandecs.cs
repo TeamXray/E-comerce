@@ -16,14 +16,21 @@ namespace E_comerce.Entity
 
         public int PrixTotal { get; set; }
 
+        public string adresse { get; set; }
 
         public int UserId { get; set; }
 
         public Users User { get; set; }
         
-        [DefaultValue("non_Paye")]
-        public string etat_payment { get; set; }
+       
+        public string etat_payment { get; set; } = "non_Paye";
 
-        public string MoyenPayment { get; set; }
+        public string couvernement { get; set; }
+      
+
+        public string MoyenPayment { get; set; } = "a la livrasion";
+        public int CodePostal { get; set; }
+        public int CartId { get; set; }
+        public Cart cart { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace E_comerce.Controllers
 {
-    [Authorize]
+   
     [Route("[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -24,7 +24,7 @@ namespace E_comerce.Controllers
         }
 
 
-        [AllowAnonymous]
+       
         [HttpGet("getallf")]
         public IActionResult Getallf()
         {
@@ -35,7 +35,7 @@ namespace E_comerce.Controllers
 
 
 
-        [AllowAnonymous]
+     
         [HttpGet("getall")]
         public IActionResult Getall()
         {
@@ -43,7 +43,7 @@ namespace E_comerce.Controllers
             return Ok(users.Where(x => x.Roles == "fournisseure"));
         }
 
-        [AllowAnonymous]
+        
 
         [HttpPut("update/{id}")]
         public IActionResult Update(int id)

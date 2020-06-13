@@ -24,6 +24,9 @@ namespace E_comerce.Dbcontext
         public DbSet<VenteFlash> venteFlashes { get; set; }
 
         public DbSet<Commandecs> commandecs { get; set; }
+        public DbSet<Cart>  carts { get; set; }
+        public DbSet<Cartitem> cartitems { get; set; }
+
 
     }
 

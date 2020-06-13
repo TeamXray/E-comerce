@@ -10,6 +10,9 @@ namespace E_comerce.Services
     {
 
         IEnumerable<Produit> GetAll();
+
+        IEnumerable<Produit> GetAllByname(string nom);
+
         Produit GetProduitById(int id);
         Produit AddProduit(Produit produit);
         Produit UpdateProduit(Produit produitupdate);

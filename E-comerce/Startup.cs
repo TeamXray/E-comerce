@@ -94,8 +94,10 @@ namespace E_comerce
             services.AddScoped<ICategorieService, CategorieService>();
             services.AddScoped<IAdmin, Adminservicecs>();
             services.AddScoped<Isous_cat, Sous_catService>();
-
-
+            services.AddScoped<IventeFlashcs, VenteFlashService>();
+            services.AddScoped<CardService>();
+            services.AddScoped<cartItemServicecs>();
+            services.AddScoped<CommandeService>();
 
 
 
